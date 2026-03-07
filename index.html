@@ -147,26 +147,25 @@
       flex-shrink: 0;
     }
 
-    /* Outer neon glow (Sharp Edge - White/Cyan Sync) */
+    /* Outer neon glow (Sides White, Top/Bottom Dark) */
     .banner::before {
       content: '';
       position: absolute;
       inset: -1px;
       border-radius: 19px;
-      background: linear-gradient(to right, #fff, #fff);
-      /* Both sides white as requested */
+      background: linear-gradient(to right, #fff 0%, transparent 35%, transparent 65%, #fff 100%);
       z-index: 0;
     }
 
-    /* Edge-focused Bloom (White Sync) */
+    /* Edge-focused Bloom (Sides Only) */
     .banner::after {
       content: '';
       position: absolute;
       inset: -2px;
       border-radius: 20px;
-      background: linear-gradient(to right, #fff, #fff);
+      background: linear-gradient(to right, #fff 0%, transparent 35%, transparent 65%, #fff 100%);
       filter: blur(15px);
-      opacity: 0.5;
+      opacity: 0.6;
       z-index: -1;
     }
 
@@ -192,9 +191,12 @@
       z-index: 1;
       border-radius: 16px;
       overflow: hidden;
-      background: rgba(20, 20, 40, 0.6);
+      background: rgba(10, 10, 25, 0.7);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      /* Heavy top shadow to ensure "black from top" look */
+      box-shadow: inset 0 40px 60px rgba(0, 0, 0, 0.9),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
     }
 
     /* Banner bg image (Steam avatar stretched + blurred as banner bg) */
@@ -219,8 +221,12 @@
     .identity-separator {
       width: 1px;
       height: 40px;
-      background: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(to bottom, #fff 0%, #aaa 50%, #fff 100%);
+      mix-blend-mode: difference;
+      opacity: 1;
       flex-shrink: 0;
+      /* High-contrast "glance" */
+      filter: contrast(1.5);
     }
 
     /* Avatar — rounded square */
@@ -246,17 +252,55 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #fff;
-      line-height: 1.2;
+      line-height: 1.1;
+      margin-bottom: 2px;
     }
 
-    .banner-tag {
+    .name-separator {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(to right, #fff 0%, #aaa 50%, #fff 100%);
+      mix-blend-mode: difference;
+      opacity: 0.8;
+      margin: 8px 0;
+      filter: contrast(1.5);
+    }
+
+    .banner-subtext {
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--teal);
-      opacity: 0.9;
+      color: var(--text);
+      opacity: 0.8;
       display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tg-mini-btn {
+      display: inline-flex;
       align-items: center;
       gap: 6px;
+      background: rgba(0, 136, 204, 0.1);
+      border: 1px solid rgba(0, 136, 204, 0.2);
+      color: #0088cc;
+      padding: 4px 8px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 10px;
+      transition: all 0.2s ease;
+      width: fit-content;
+    }
+
+    .tg-mini-btn:hover {
+      background: rgba(0, 136, 204, 0.2);
+      border-color: rgba(0, 136, 204, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .tg-mini-btn svg {
+      width: 12px;
+      height: 12px;
     }
 
     .status-dot {
@@ -816,8 +860,16 @@
             <div class="identity-separator"></div>
             <div>
               <div class="banner-name">pajiro</div>
-              <div class="banner-tag">
-                <span class="status-dot"></span> Online
+              <div class="name-separator"></div>
+              <div class="banner-subtext">
+                Не отвечаю? Пиши в ТГ:
+                <a href="https://t.me/pajiro1" target="_blank" class="tg-mini-btn">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                  </svg>
+                  @pajiro1
+                </a>
               </div>
             </div>
           </div>
